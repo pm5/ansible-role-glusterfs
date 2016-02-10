@@ -32,8 +32,6 @@
 - name: Ensure GlusterFS mount points exist.
   file:
     dest={{ item.name }}
-    owner={{ glusterfs_mount_owner }}
-    group={{ glusterfs_mount_group }}
     state=directory
   with_items: glusterfs_mount_points
 
@@ -55,5 +53,11 @@
   with_items: glusterfs_mount_points
 
 - name: Ensure GlusterFS permissions are set.
-  shell: setfacl -d -m u:{{ glusterfs_mount_owner }}:rwx -m g:{{ glusterfs_mount_group }}:rwx {{ item.name }}
+  acl:
+    name={{ item.name }}
+    etype=user
+    entity={{ glusterfs_mount_owner }}
+    permissions=rwx
+    default=yes
+    state=present
   with_items: glusterfs_mount_points
