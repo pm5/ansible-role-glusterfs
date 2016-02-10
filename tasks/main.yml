@@ -16,7 +16,6 @@
 - name: Ensure brick directories are present.
   file: dest={{ item }} state=directory
   with_items: glusterfs_bricks
-  when: glusterfs_bricks is defined
 
 - name: Ensure GlusterFS volumes are created.
   gluster_volume:
@@ -24,11 +23,11 @@
     bricks={{ glusterfs_bricks | join(",") }}
     force={{ glusterfs_force | default("no") }}
     state=present
-  when: glusterfs_volume_name is defined and glusterfs_bricks is defined
+  when: glusterfs_volume_name != "" and glusterfs_bricks != []
 
 - name: Ensure GlusterFS volumes are started
   gluster_volume: name={{ glusterfs_volume_name }} state=started
-  when: glusterfs_volume_name is defined
+  when: glusterfs_volume_name != ""
 
 - name: Ensure GlusterFS mount points exist.
   file:
@@ -36,7 +35,6 @@
     owner={{ glusterfs_mount_owner }}
     group={{ glusterfs_mount_group }}
     state=directory
-  when: glusterfs_mount_points is defined
   with_items: glusterfs_mount_points
 
 - name: Ensure GlusterFS mount entries are present in /etc/fstab.
@@ -45,8 +43,8 @@
     src={{ item.src }}
     fstype=glusterfs
     state=present
-  when: glusterfs_mount_points is defined
   with_items: glusterfs_mount_points
+
 - name: Ensure GlusterFS entries are mounted.
   mount:
     name={{ item.name }}
@@ -54,9 +52,8 @@
     fstype=glusterfs
     opts=rw,acl
     state=mounted
-  when: glusterfs_mount_points is defined
   with_items: glusterfs_mount_points
+
 - name: Ensure GlusterFS permissions are set.
   shell: setfacl -d -m u:{{ glusterfs_mount_owner }}:rwx -m g:{{ glusterfs_mount_group }}:rwx {{ item.name }}
-  when: glusterfs_mount_points is defined
   with_items: glusterfs_mount_points
