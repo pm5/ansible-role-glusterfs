@@ -1,7 +1,5 @@
 # Ansible Role: GlusterFS
 
-[![Build Status](https://travis-ci.org/geerlingguy/ansible-role-glusterfs.svg?branch=master)](https://travis-ci.org/geerlingguy/ansible-role-glusterfs)
-
 Installs and configures GlusterFS on Linux.
 
 ## Requirements
@@ -35,7 +33,7 @@ None.
 
     - hosts: server
       roles:
-        - { role: geerlingguy.glusterfs }
+        - { role: pm5.glusterfs }
 
 ## License
 
@@ -43,4 +41,4 @@ MIT / BSD
 
 ## Author Information
 
-This role was created in 2015 by [Jeff Geerling](http://jeffgeerling.com/), author of [Ansible for DevOps](http://ansiblefordevops.com/).
+This role was originally created in 2015 by [Jeff Geerling](http://jeffgeerling.com/), author of [Ansible for DevOps](http://ansiblefordevops.com/).  It was then adapted my [Pomin Wu](https://github.com/pm5/).
