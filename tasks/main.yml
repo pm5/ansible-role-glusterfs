@@ -52,7 +52,7 @@
     state=mounted
   with_items: glusterfs_mount_points
 
-- name: Ensure GlusterFS permissions are set.
+- name: Ensure GlusterFS ACLs are set.
   acl:
     name={{ item.name }}
     etype=user
