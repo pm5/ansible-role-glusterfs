@@ -58,6 +58,15 @@
     etype=user
     entity={{ glusterfs_mount_owner }}
     permissions=rwx
+    state=present
+  with_items: glusterfs_mount_points
+
+- name: Ensure GlusterFS default ACLs are set.
+  acl:
+    name={{ item.name }}
+    etype=user
+    entity={{ glusterfs_mount_owner }}
+    permissions=rwx
     default=yes
     state=present
   with_items: glusterfs_mount_points
