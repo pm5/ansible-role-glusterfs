@@ -1,16 +1,13 @@
 ---
 glusterfs_default_release: ""
 
-glusterfs_bricks:
-  - "/data/glusterfs/myvolume/brick0/brick"
+glusterfs_bricks: []
 
-glusterfs_volume_name: "myvolume"
+glusterfs_volume_name: ""
 
-glusterfs_force: "yes"
+glusterfs_force: "no"
 
-glusterfs_mount_points:
-  - name: "/mnt/volume"
-    src: "server0:volume"
+glusterfs_mount_points: []
 
 glusterfs_mount_owner: "root"
 
