@@ -2,9 +2,9 @@
 glusterfs_default_release: ""
 
 glusterfs_bricks:
-  - "/data/glusterfs/volume/brick0/brick"
+  - "/data/glusterfs/myvolume/brick0/brick"
 
-glusterfs_volume_name: "volume"
+glusterfs_volume_name: "myvolume"
 
 glusterfs_force: "yes"
 
