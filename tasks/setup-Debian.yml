@@ -15,4 +15,6 @@
     default_release: "{{ glusterfs_default_release }}"
   with_items:
     - glusterfs-client
+    - acl
+
   when: glusterfs_client == "yes"
