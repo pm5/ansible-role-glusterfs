@@ -12,10 +12,12 @@
 
 - name: Ensure GlusterFS is started and enabled at boot.
   service: "name={{ glusterfs_daemon }} state=started enabled=yes"
+  when: glusterfs_server == "yes"
 
 - name: Ensure brick directories are present.
   file: dest={{ item }} state=directory
   with_items: glusterfs_bricks
+  when: glusterfs_server == "yes"
 
 - name: Ensure GlusterFS volumes are created.
   gluster_volume:
@@ -23,17 +25,18 @@
     bricks={{ glusterfs_bricks | join(",") }}
     force={{ glusterfs_force | default("no") }}
     state=present
-  when: glusterfs_volume_name != "" and glusterfs_bricks != []
+  when: glusterfs_server == "yes" and glusterfs_volume_name != "" and glusterfs_bricks != []
 
 - name: Ensure GlusterFS volumes are started
   gluster_volume: name={{ glusterfs_volume_name }} state=started
-  when: glusterfs_volume_name != ""
+  when: glusterfs_server == "yes" and glusterfs_volume_name != ""
 
 - name: Ensure GlusterFS mount points exist.
   file:
     dest={{ item.name }}
     state=directory
   with_items: glusterfs_mount_points
+  when: glusterfs_client == "yes"
 
 - name: Ensure GlusterFS mount entries are present in /etc/fstab.
   mount:
@@ -42,6 +45,7 @@
     fstype=glusterfs
     state=present
   with_items: glusterfs_mount_points
+  when: glusterfs_client == "yes"
 
 - name: Ensure GlusterFS entries are mounted.
   mount:
@@ -51,6 +55,7 @@
     opts=rw,acl
     state=mounted
   with_items: glusterfs_mount_points
+  when: glusterfs_client == "yes"
 
 - name: Ensure GlusterFS ACLs are set.
   acl:
@@ -60,6 +65,7 @@
     permissions=rwx
     state=present
   with_items: glusterfs_mount_points
+  when: glusterfs_client == "yes"
 
 - name: Ensure GlusterFS default ACLs are set.
   acl:
@@ -70,3 +76,4 @@
     default=yes
     state=present
   with_items: glusterfs_mount_points
+  when: glusterfs_client == "yes"

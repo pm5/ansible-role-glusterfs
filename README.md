@@ -12,11 +12,14 @@ This role performs basic installation and setup of Gluster, but it does not conf
 
 Available variables are listed below, along with default values (see `defaults/main.yml`):
 
+    glusterfs_server: yes
     glusterfs_default_release: ""
     glusterfs_bricks:
       - /data/glusterfs/volume/brick0/brick
     glusterfs_volume_name: volume
     glusterfs_force: yes
+
+    glusterfs_client: no
     glusterfs_mount_points:
       - name: /mnt/volume
         src: server0:volume

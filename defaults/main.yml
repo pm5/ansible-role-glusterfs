@@ -1,4 +1,6 @@
 ---
+glusterfs_server: "yes"
+
 glusterfs_default_release: ""
 
 glusterfs_bricks: []
@@ -6,6 +8,8 @@ glusterfs_bricks: []
 glusterfs_volume_name: ""
 
 glusterfs_force: "no"
+
+glusterfs_client: "no"
 
 glusterfs_mount_points: []
 

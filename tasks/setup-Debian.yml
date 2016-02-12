@@ -1,9 +1,18 @@
 ---
-- name: Ensure GlusterFS is installed.
+- name: Ensure GlusterFS server is installed.
   apt:
     name: "{{ item }}"
     state: installed
     default_release: "{{ glusterfs_default_release }}"
   with_items:
     - glusterfs-server
+  when: glusterfs_server == "yes"
+
+- name: Ensure GlusterFS client is installed.
+  apt:
+    name: "{{ item }}"
+    state: installed
+    default_release: "{{ glusterfs_default_release }}"
+  with_items:
     - glusterfs-client
+  when: glusterfs_client == "yes"
