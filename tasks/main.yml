@@ -25,6 +25,7 @@
     bricks={{ glusterfs_bricks | join(",") }}
     force={{ glusterfs_force | default("no") }}
     state=present
+  ignore_errors: yes
   when: glusterfs_server == "yes" and glusterfs_volume_name != "" and glusterfs_bricks != []
 
 - name: Ensure GlusterFS volumes are started
